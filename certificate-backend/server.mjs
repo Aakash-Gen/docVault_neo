@@ -20,23 +20,20 @@ app.post('/generate-certificate', async (req, res) => {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
 
-  const htmlTemplate = fs.readFileSync(path.resolve(__dirname, 'certificate.html'), 'utf8');
+  const htmlTemplate = fs.readFileSync(path.resolve(__dirname, `${data.documentType}.html`), 'utf8');
 
   const html = htmlTemplate
-    .replace('{{institutionName}}', data.institutionName)
-    .replace('{{institutionAddress}}', data.institutionAddress)
     .replace('{{dateOfIssue}}', data.dateOfIssue)
-    .replace('{{certificateNumber}}', data.certificateNumber)
     .replace('{{recipientName}}', data.recipientName)
-    .replace('{{dateOfBirth}}', data.dateOfBirth)
     .replace('{{course}}', data.course)
-    .replace('{{enrollmentNumber}}', data.enrollmentNumber)
+    .replace('{{department}}', data.department)
     .replace('{{duration}}', data.duration)
+    .replace('{{reason}}', data.reason)
+    .replace('{{field}}', data.field)
+    .replace('{{position}}', data.position)
     .replace('{{purpose}}', data.purpose)
     .replace('{{authorizedName}}', data.authorizedName)
-    .replace('{{authorizedDesignation}}', data.authorizedDesignation)
-    .replace('{{signatureImageUrl}}', data.signatureImageUrl)
-    .replace('{{signatureDate}}', data.signatureDate);
+    .replace('{{jobTitle}}', data.jobTitle)
 
   try {
     const buffer = await nodeHtmlToImage({

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Button } from "@/components/ui/button";
 import { useParams } from 'react-router-dom';
@@ -8,6 +8,7 @@ import { payToMint2 } from '@/contract/methods';
 import useWallet from '@/hooks/useWallet';
 import { toast } from 'react-toastify';
 import { deleteNewDocumentRequestSendMethod } from '@/contract/vault/methods2';
+import { getUserNameMethod } from '@/contract/vault/methods';
 import 'react-toastify/dist/ReactToastify.css'
 
 const jsonData = {
@@ -26,21 +27,32 @@ const CertificateForm = () => {
   const { userAddress, requestId, docType } = useParams();
   const walletAddress = localStorage.getItem('walletAddress');
   const [metadataUri, setMetadataUri] = useState('');
-  const {signer} = useWallet();
+  const {address ,signer} = useWallet();
+  const [ userName, setUserName ] = useState('');
+  const [ orgName, setOrgName ] = useState('');
+
+  const getNameFromAddress = async () => {
+    const nameUser = await getUserNameMethod(address, userAddress);
+    const nameOrg = await getUserNameMethod(address, address);
+    setUserName(nameUser);
+    setOrgName(nameOrg);
+  }
+  useEffect(() => {
+    getNameFromAddress();
+  },[]);
+
 
   const [formData, setFormData] = useState({
     documentType: `${docType}`,
-    organization: '',
-    institutionName: '',
     dateOfIssue: '',
-    certificateNumber: '',
-    recipientName: '',
+    recipientName: `${userName}`,
     course: '',
     duration: '',
-    purpose: '',
-    authorizedName: '',
-    authorizedDesignation: '',
-    signatureDate: '',
+    position: '',
+    field: '',
+    jobTitle: '',
+    reason: '',
+    authorizedName: `${orgName}`,
   });
 
   const [imageUrl, setImageUrl] = useState('');
@@ -169,77 +181,21 @@ const CertificateForm = () => {
 
   return (
     // <></>
-    <div className="p-6 max-w-4xl mx-auto bg-gray-50 shadow-lg rounded-lg mt-10 flex flex-col">
+    <div className="p-6 max-h-6xl max-w-4xl mx-auto bg-gray-50 shadow-lg rounded-lg mt-10 flex flex-col">
       <h1 className="text-3xl font-bold mb-8 text-center text-primaryGreen">Generate Certificate</h1>
       
       {/* Form */}
-      <form className="space-y-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {/* Document Type */}
-          <div>
-            <label className="block text-gray-700 font-semibold">Document Type</label>
-            <select
-              name="documentType"
-              value={formData.documentType}
-              onChange={handleChange}
-              className="w-full border border-gray-300 p-2 mt-2 rounded-md bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-primaryGreen"
-            >
-              <option value="">{docType}</option>
-              <option value="bonafide">Bonafide Certificate</option>
-              <option value="merit-award">Merit Award Certificate</option>
-            </select>
-          </div>
+      <form className="space-y-8">     
+      
 
-          {/* Organization */}
+        {docType==="Bonafide" && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div>
-            <label className="block text-gray-700 font-semibold">Organization</label>
-            <select
-              name="organization"
-              value={formData.organization}
-              onChange={handleChange}
-              className="w-full border border-gray-300 p-2 mt-2 rounded-md bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-primaryGreen"
-            >
-              <option value="">Select Organization</option>
-              <option value="nsut">Netaji Subhas University of Technology</option>
-              <option value="iitd">Indian Institute of Technology Delhi</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {/* Institution Name */}
-          <div>
-            <label className="block text-gray-700 font-semibold">Institution Name</label>
-            <input
-              type="text"
-              name="institutionName"
-              value={formData.institutionName}
-              onChange={handleChange}
-              className="w-full border border-gray-300 p-2 mt-2 rounded-md bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-primaryGreen"
-            />
-          </div>
-
-          {/* Date of Issue */}
-          <div>
-            <label className="block text-gray-700 font-semibold">Date of Issue</label>
-            <input
-              type="date"
-              name="dateOfIssue"
-              value={formData.dateOfIssue}
-              onChange={handleChange}
-              className="w-full border border-gray-300 p-2 mt-2 rounded-md bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-primaryGreen"
-            />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {/* Certificate Number */}
-          <div>
-            <label className="block text-gray-700 font-semibold">Certificate Number</label>
+            <label className="block text-gray-700 font-semibold">Course</label>
             <input
               type="text"
               name="certificateNumber"
-              value={formData.certificateNumber}
+              value={formData.course}
               onChange={handleChange}
               className="w-full border border-gray-300 p-2 mt-2 rounded-md bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-primaryGreen"
             />
@@ -247,94 +203,98 @@ const CertificateForm = () => {
 
           {/* Recipient Name */}
           <div>
-            <label className="block text-gray-700 font-semibold">Recipient Name</label>
-            <input
-              type="text"
-              name="recipientName"
-              value={formData.recipientName}
-              onChange={handleChange}
-              className="w-full border border-gray-300 p-2 mt-2 rounded-md bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-primaryGreen"
-            />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {/* Course */}
-          <div>
-            <label className="block text-gray-700 font-semibold">Course</label>
-            <input
-              type="text"
-              name="course"
-              value={formData.course}
-              onChange={handleChange}
-              className="w-full border border-gray-300 p-2 mt-2 rounded-md bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-primaryGreen"
-            />
-          </div>
-
-          {/* Duration */}
-          <div>
             <label className="block text-gray-700 font-semibold">Duration</label>
             <input
               type="text"
-              name="duration"
+              name="recipientName"
               value={formData.duration}
               onChange={handleChange}
               className="w-full border border-gray-300 p-2 mt-2 rounded-md bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-primaryGreen"
             />
           </div>
         </div>
+        )}
+        
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {/* Purpose */}
+        {docType==="Merit" && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          {/* Certificate Number */}
           <div>
-            <label className="block text-gray-700 font-semibold">Purpose</label>
+            <label className="block text-gray-700 font-semibold">Position</label>
             <input
               type="text"
-              name="purpose"
-              value={formData.purpose}
+              name="certificateNumber"
+              value={formData.position}
               onChange={handleChange}
               className="w-full border border-gray-300 p-2 mt-2 rounded-md bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-primaryGreen"
             />
           </div>
 
-          {/* Authorized Name */}
+          {/* Recipient Name */}
           <div>
-            <label className="block text-gray-700 font-semibold">Authorized Name</label>
+            <label className="block text-gray-700 font-semibold">Field</label>
             <input
               type="text"
-              name="authorizedName"
-              value={formData.authorizedName}
+              name="recipientName"
+              value={formData.field}
               onChange={handleChange}
               className="w-full border border-gray-300 p-2 mt-2 rounded-md bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-primaryGreen"
             />
           </div>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {/* Authorized Designation */}
+        )}
+         {docType==="Employment-Proof" && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div>
-            <label className="block text-gray-700 font-semibold">Authorized Designation</label>
+            <label className="block text-gray-700 font-semibold">Job Title</label>
             <input
               type="text"
-              name="authorizedDesignation"
-              value={formData.authorizedDesignation}
+              name="certificateNumber"
+              value={formData.jobTitle}
               onChange={handleChange}
               className="w-full border border-gray-300 p-2 mt-2 rounded-md bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-primaryGreen"
             />
           </div>
 
+          {/* Recipient Name */}
           <div>
-            <label className="block text-gray-700 font-semibold">Signature Date</label>
+            <label className="block text-gray-700 font-semibold">Duration</label>
             <input
-              type="date"
-              name="signatureDate"
-              value={formData.signatureDate}
+              type="text"
+              name="recipientName"
+              value={formData.duration}
               onChange={handleChange}
               className="w-full border border-gray-300 p-2 mt-2 rounded-md bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-primaryGreen"
             />
           </div>
         </div>
+        )}
+        {docType==="Medical" && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div>
+            <label className="block text-gray-700 font-semibold">Reason</label>
+            <input
+              type="text"
+              name="certificateNumber"
+              value={formData.reason}
+              onChange={handleChange}
+              className="w-full border border-gray-300 p-2 mt-2 rounded-md bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-primaryGreen"
+            />
+          </div>
 
+          {/* Recipient Name */}
+          <div>
+            <label className="block text-gray-700 font-semibold">Duration</label>
+            <input
+              type="text"
+              name="recipientName"
+              value={formData.duration}
+              onChange={handleChange}
+              className="w-full border border-gray-300 p-2 mt-2 rounded-md bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-primaryGreen"
+            />
+          </div>
+        </div>
+        )}
         {/* Submit Button */}
         {/* <div className="flex justify-center">
           <Button type="submit" className="w-full bg-primaryGreen text-white">Generate Certificate</Button>
@@ -354,7 +314,7 @@ const CertificateForm = () => {
         </div>
       )}
 
-      <Button className="w-full bg-primaryGreen text-white" onClick={handleGenerateAndUpload}> Generate Certificate </Button>
+      <Button className="w-full mb-4 bg-primaryGreen text-white" onClick={handleGenerateAndUpload}> Generate Certificate </Button>
       <Button onClick={handleMint}> Mint NFT </Button>
     </div>
   );
