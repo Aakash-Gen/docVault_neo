@@ -8,10 +8,10 @@ function App() {
     <div className='flex flex-col'>
       <BrowserRouter>
       <HeaderWithConditionalRendering />
-
-        <Routes>
-          <Route path='/login' element={<Login />}/>
-        </Routes>
+      
+      <Routes>
+        <Route path='/login' element={<Login />}/>
+      </Routes>
     </BrowserRouter>
     </div>
   )
