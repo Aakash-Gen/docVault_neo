@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proof of Employment</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #f3f4f6;
+        }
+        .certificate-container {
+            border: 5px solid #333;
+            padding: 50px;
+            max-width: 850px;
+            width: 100%;
+            margin: auto;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+            box-sizing: border-box;
+        }
+        .certificate-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .certificate-header h1 {
+            font-size: 36px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 3px;
+            color: #2c3e50;
+            margin: 0;
+        }
+        .certificate-header p {
+            font-size: 18px;
+            color: #555;
+            margin-top: 8px;
+        }
+        /* Updated Font for Certificate Body */
+        .certificate-body {
+            font-family: 'Arial', sans-serif;
+            font-size: 18px;
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 50px;
+        }
+        .certificate-body .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .certificate-body .row p {
+            width: 48%;
+            margin: 0;
+        }
+        .certificate-body .row p span {
+            color: #555;
+            font-weight: normal;
+        }
+        .certificate-body .full-width {
+            text-align: left; /* Left align the certificate number */
+            margin: 20px 0;
+        }
+        .signature-section {
+            display: flex; /* Use flexbox for alignment */
+            justify-content: space-between; /* Space between left and right */
+            border-top: 2px dashed #333;
+            padding-top: 40px;
+            font-size: 16px;
+        }
+        .signature-section .name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .signature-section .designation {
+            margin-bottom: 20px;
+            color: #555;
+        }
+        .signature-section img {
+            max-width: 180px;
+            height: auto;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="certificate-container">
+        <div class="certificate-header">
+            <h1>Merit Certificate</h1>
+            <p>This document certifies the Achievment of the concerned recipient.</p>
+        </div>
+
+        <div class="certificate-body">
+            <div class="row">
+                <p><strong>Recipient Name: </strong><span>{{recipientName}}</span></p>
+                <p><strong>Position: </strong><span>{{position}}</span></p>
+            </div>
+            <div class="row">
+                <p><strong>Field: </strong><span>{{field}}</span></p>
+                <p class="name">Date of Issue: {{dateOfIssue}}</p>
+            </div>
+        </div>
+
+        <div class="signature-section">
+            <p class="name">Authorized by: {{authorizedName}}</p>
+        </div>
+    </div>
+</body>
+</html>

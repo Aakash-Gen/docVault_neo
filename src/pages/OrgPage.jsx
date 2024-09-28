@@ -163,12 +163,10 @@ function OrgPage() {
                             <SelectValue placeholder="Select Doc Type" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="BONAFIDE">Bonafide Certificate</SelectItem>
-                            <SelectItem value="MERIT">Merit Award Certificate</SelectItem>
-                            <SelectItem value="MEDICAL">Medical Certificate</SelectItem>
-                            <SelectItem value="SCHOOL">School leaving Certificate</SelectItem>
-                            <SelectItem value="LOR">Letter of Recommendation</SelectItem>
-                            <SelectItem value="APPOINTMENT">Appointment letter</SelectItem>
+                            <SelectItem value="Bonafide">Bonafide Certificate</SelectItem>
+                            <SelectItem value="Merit">Merit Award Certificate</SelectItem>
+                            <SelectItem value="Medical">Medical Certificate</SelectItem>
+                            <SelectItem value="Employment-Proof">School leaving Certificate</SelectItem>
                             <SelectItem value="OTHER">Other</SelectItem>
                           </SelectContent>
                         </Select>
