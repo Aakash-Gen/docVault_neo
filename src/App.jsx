@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './pages/Header';
 import Login from './pages/Login';
-import SignUp from './pages/Signup';
+import Members from './pages/Members';
 import { UserProfile } from './pages/UserProfile';
 
 function App() {
@@ -13,6 +13,7 @@ function App() {
       <Routes>
         <Route path='/login' element={<Login />}/>
         <Route path='/user/:id' element={<UserProfile />}/>
+        <Route path='/members' element={<Members />} />
       </Routes>
     </BrowserRouter>
     </div>

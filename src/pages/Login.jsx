@@ -7,8 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { connectWallet } from '@/utils/connectWallet';
-// import { getUserNameMethod, getOrgNameMethod } from '@/contract/vault/methods';
-// import { registerUserSendMethod, registerOrganizationSendMethod } from '@/contract/vault/methods2';
+import { getUserNameMethod, getOrgNameMethod } from '@/contract/vault/methods';
+import { registerUserSendMethod, registerOrganizationSendMethod } from '@/contract/vault/methods2';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
