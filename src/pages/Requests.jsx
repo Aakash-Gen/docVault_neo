@@ -64,22 +64,22 @@ export default function Requests() {
                       ): (
                         newDocRequests.map((request, index) => (
                           <RequestCard 
-                            // key={index}
-                            // id={request.id}
-                            // title={request.title}
-                            // description={request.description}
-                            // docType={request.docType}
-                            // publisher={request.publisher}
-                            // newDoc={true}
-                            // link={'https://gateway.pinata.cloud/ipfs/QmY92GQTaHGyrFW4KLYLo7rveeMhzgcWDUHmvzqxeCL6wJ'}
-                            key={1}
-                            id={1}
-                            title={'hello'}
-                            description={'hello'}
-                            docType={file}
-                            publisher={123}
+                            key={index}
+                            id={request.id}
+                            title={request.title}
+                            description={request.description}
+                            docType={request.docType}
+                            publisher={request.publisher}
                             newDoc={true}
                             link={'https://gateway.pinata.cloud/ipfs/QmY92GQTaHGyrFW4KLYLo7rveeMhzgcWDUHmvzqxeCL6wJ'}
+                            // key={1}
+                            // id={1}
+                            // title={'hello'}
+                            // description={'hello'}
+                            // docType={file}
+                            // publisher={123}
+                            // newDoc={true}
+                            // link={'https://gateway.pinata.cloud/ipfs/QmY92GQTaHGyrFW4KLYLo7rveeMhzgcWDUHmvzqxeCL6wJ'}
                           />
                         ))
                       )
