@@ -59,12 +59,6 @@ export default function Component() {
 
   const { data: orgs, isLoading: orgsLoading } = useQuery('user-orgs2', fetchOrgs);
 
-  // const getNameFromAddress = async () => {
-  //   const name = await getUserNameMethod(address, address);
-  //   console.log('name', name);
-  //   return name;
-  // }
-
   return (
     <div className="min-h-screen w-full bg-gray-900 px-5 flex justify-center">
       <div className='flex flex-col gap-6 my-10 w-full max-w-[900px]'>

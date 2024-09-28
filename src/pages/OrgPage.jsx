@@ -49,6 +49,10 @@ function OrgPage() {
   }
 
   const onNewDocumentRequest = async () => {
+    if (!title || !description || !documentType) {
+      toast.error("Please fill all the fields");
+      return
+    }
     const uniqueId = uuidv4();
     await toast.promise(
       addNewDocumentRequestSendMethod(signer, orgAddress, uniqueId, title, description, '', documentType),
@@ -122,10 +126,10 @@ function OrgPage() {
                 <div className="flex justify-start mb-8">
                   <TabsList className="grid w-full h-min grid-cols-2 bg-gray-800 text-white">
                     <TabsTrigger value="new" className="py-1.5 text-sm flex items-center justify-center">
-                      Members
+                      New Document
                     </TabsTrigger>
                     <TabsTrigger value="verify" className="py-1.5 text-sm flex items-center justify-center">
-                      Requests
+                      Verification Request
                     </TabsTrigger>
                   </TabsList>
                 </div>
@@ -153,7 +157,7 @@ function OrgPage() {
                             <SelectItem value="Bonafide">Bonafide Certificate</SelectItem>
                             <SelectItem value="Merit">Merit Award Certificate</SelectItem>
                             <SelectItem value="Medical">Medical Certificate</SelectItem>
-                            <SelectItem value="Employment-Proof">School leaving Certificate</SelectItem>
+                            <SelectItem value="Employment-Proof">Proof of Employment</SelectItem>
                         </SelectContent>
                       </Select>
 

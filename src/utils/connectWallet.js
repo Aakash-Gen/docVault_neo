@@ -1,10 +1,10 @@
 import Web3 from 'web3';
-import { connectToGanache, connectToSepolia }  from './walletAdapter'
+import { connectToGanache, connectToSepolia, connectToNeoX }  from './walletAdapter'
 import { ethers } from 'ethers';
 
 export const connectWallet = async () => {
   try {
-    await connectToSepolia();
+    await connectToNeoX();
     const currentProvider = detectCurrentProvider();
     if (currentProvider) {
       await currentProvider.request({ method: 'eth_requestAccounts' });
@@ -42,7 +42,7 @@ const detectCurrentProvider = () => {
 
 export const getBalance = async (account) => {
     try {
-        await connectToSepolia();
+        await connectToNeoX();
         const currentProvider = detectCurrentProvider();
         if (currentProvider) {
           const web3 = new Web3(currentProvider);

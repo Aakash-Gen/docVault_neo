@@ -1,6 +1,6 @@
 
 // export const providerUrl = 'http://127.0.0.1:8545';
-export const providerUrl = 'https://rpc2.sepolia.org';
+export const providerUrl = 'https://neoxt4seed1.ngd.network';
 
 
 export const abi = [
@@ -798,4 +798,4 @@ export const abi = [
 ];
 
 // export const contractAddress = '0x4b2e6f05bC2Dc52a2e1607cE38C8f2EBe7228dfa';
-export const contractAddress = '0x08F9CA77f7C9AeC64AF8C3066dF88b8822B67eb6';
+export const contractAddress = '0x754b6e662997eb38e18e7cd10805752ac44bb02a';

@@ -1,7 +1,7 @@
 // export const providerUrl = 'https://jzngnl43-8545.inc1.devtunnels.ms/';
 // https://chainlist.org/chain/11155111
 // export const providerUrl = 'https://eth-sepolia.public.blastapi.io';
-export const providerUrl = 'https://rpc2.sepolia.org';
+export const providerUrl = 'https://neoxt4seed1.ngd.network';
 // export const providerUrl = 'https://9c9f1t91-8545.inc1.devtunnels.ms/';
 // export const providerUrl = 'https://eth-sepolia.g.alchemy.com/v2/ltiEfZS27C_LqwUQWTrLsbpHufdkcSrp';
 
@@ -698,5 +698,5 @@ export const abi = [
 ];
 
 
-export const contractAddress = '0x0e20ab9d629667abe8f194ee23a675eb7f1b4fde';
-// export const contractAddress = '0xcb22b4d9dbc9e9e530af9a6cc69072787cbfe145';
+// export const contractAddress = '0x84d570c2e04b4bdd16955f6cb0ef3f964dda9f49';
+export const contractAddress = '0x22a6c6d6f16a21bc5d006ac9a4b4435252742ad6';

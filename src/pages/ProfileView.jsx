@@ -12,6 +12,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { fetchMetadataFromIPFS } from '../utils/fetchMetadataFromIPFS';
 import { extractIpfsHash } from '../utils/extractIpfsHash';
+import { getUserNameMethod } from '@/contract/vault/methods';
 import {
   Select,
   SelectContent,
@@ -22,6 +23,7 @@ import {
 
 function ProfileView() {
   const { id } = useParams();
+  const [ name, setName ] = useState('');
   const [ selectedFile, setSelectedFile ] = useState(null);
   const [ predictionResult, setPredictionResult ] = useState(null);
   const [ success, setSuccess ] = useState("")
@@ -151,6 +153,15 @@ function ProfileView() {
     filesRefetch();
   }, [])
 
+  const getName = async () => {
+    const nameT = await getUserNameMethod(id, id);
+    setName(nameT);
+  }
+
+  useEffect(() => {
+    getName();
+  }, [])
+
   return (
     <div className="bg-gray-900 h-screen px-16">
     <ToastContainer />
@@ -158,7 +169,7 @@ function ProfileView() {
       <div className="flex justify-between pt-12 items-center mb-4">
         {/* <h1 className="text-white font-bold text-3xl">My Files</h1> */}
         <div className="flex flex-col mb-2">
-          <h1 className="font-bold text-4xl text-gray-200">Harshit RV</h1>
+          <h1 className="font-bold text-4xl text-gray-200">{name}</h1>
           <h3 className="mt-2 text-gray-500">0x7EC8e6614A2E3A1E4d6e321376a608666C8B6f8d</h3>
         </div>
           {/* <Dialog>
@@ -274,7 +285,7 @@ function ProfileView() {
             </DialogContent>
           </Dialog> */}
       </div>
-      <p className="text-sm font-bold text-gray-500 mt-5 mb-3">EDUCATION</p>
+      {/* <p className="text-sm font-bold text-gray-500 mt-5 mb-3">EDUCATION</p> */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         {
           filesLoading && (
@@ -289,7 +300,7 @@ function ProfileView() {
           : filesData.length === 0
             ? (
               <div className='w-full rounded-2xl px-3 py-4 text-gray-400 gap-2 justify-between flex'>
-                <span className='font-bold text-2xl'>No Members</span>
+                <span className='font-bold text-2xl'>No Files</span>
               </div>
             ): (
               filesData.map((file, index) => (

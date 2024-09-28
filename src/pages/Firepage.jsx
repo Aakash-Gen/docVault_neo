@@ -24,13 +24,13 @@ function Firepage() {
     const safeMint2 = async () => {
         const aakash = '0x260192b1B8b4ecDeF2EeC2C02Bd9Ae15011464a5';
         const meta = 'QmSxWzVwpTsQEDy8KxGXLbJhTf9W81irnaNbgXM4E1TDCp';
-        await safeMintNFT(address, aakash, meta);
+        await safeMintNFT(address, address, meta);
     }
     const paytomint = async () => {
         const aakash = '0x260192b1B8b4ecDeF2EeC2C02Bd9Ae15011464a5';
         const aayushi = '0x53C22E3fdF8Cf8c23944889f60eEC7263C2A3F2c';
         const meta = 'QmUmtxCWQFxQwMdfNPwQBrf9HRo7N7gwpz3ibP6ARXd93K';
-        await payToMint2(signer, aayushi, meta);
+        await payToMint2(signer, address, meta);
     }
 
     const getBalance2 = async () => {

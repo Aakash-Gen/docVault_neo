@@ -102,6 +102,7 @@ function UserForm({ navigate }) {
       } else {
 
         const userName = await getUserNameMethod(account, account);
+        console.log('userName: ', userName);
 
         if (userName == null) {
           toast.error("User not registered. Please sign up.");
