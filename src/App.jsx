@@ -1,7 +1,18 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import Header from './pages/Header';
+import TestPage from './pages/TestPage';
+import MyFiles from './pages/MyFiles';
+import VerifyDocs from './pages/VerifyDocs';
 import Login from './pages/Login';
+import MyOrgs from './pages/MyOrgs';
+import Certificate from './pages/Certificate';
+import Requests from './pages/Requests';
+import OrgPage from './pages/OrgPage';
 import Members from './pages/Members';
+// import Copy from './copy';
+import Header from './pages/Header';
+import IpfsHash from './components/IpfsHash';
+import Firepage from './pages/Firepage';
+import PredictionForm from './pages/Prediction';
 import { UserProfile } from './pages/UserProfile';
 
 function App() {
@@ -10,11 +21,27 @@ function App() {
       <BrowserRouter>
       <HeaderWithConditionalRendering />
 
-      <Routes>
-        <Route path='/login' element={<Login />}/>
-        <Route path='/user/:id' element={<UserProfile />}/>
-        <Route path='/members' element={<Members />} />
-      </Routes>
+        <Routes>
+          <Route path='/' element={<TestPage />} />
+          <Route path='/firepage' element={<Firepage />} />
+          <Route path='prediction' element={<PredictionForm/>}/>
+          <Route path="/myfiles" element={<MyFiles />} />
+          <Route path="/verifydocs" element={<VerifyDocs />} />
+          <Route path='/login' element={<Login />}/>
+          <Route path='/user/:id' element={<UserProfile/>}/>
+          <Route path='/certificate/:userAddress/:requestId/type/:docType' element={ 
+            <Layout>
+                <Certificate />
+              </Layout>
+            }/>
+          {/* <Route path='/certificate' element={<Certificate />} /> */}
+          <Route path="/myorgs" element={<MyOrgs />} />
+          <Route path='/requests' element={<Requests />} />1
+          <Route path="/org/:orgAddress" element={<OrgPage/>} />
+          <Route path='/members' element={<Members />} />
+          {/* <Route path='/copy' element={<Copy/>}/> */}
+          <Route path='/ipfshash' element={<IpfsHash/>}/>
+        </Routes>
     </BrowserRouter>
     </div>
   )
@@ -26,12 +53,12 @@ const HeaderWithConditionalRendering = () => {
   return location.pathname !== '/login' ? <Header /> : null;
 };
 
-// const Layout = ({ children }) => {
-//   return (
-//     <div className="bg-gray-900">
-//       {children}
-//     </div>
-//   );
-// };
+const Layout = ({ children }) => {
+  return (
+    <div className="bg-gray-900">
+      {children}
+    </div>
+  );
+};
 
 export default App
