@@ -1,6 +1,6 @@
 export const UserProfile = () => {
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center px-20 text-black">
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center px-20 text-black">
       <div className=" w-full h-96 max-w-screen py-10">
         <h1 className="font-bold text-4xl">Harshit RV</h1>
         <h3 className="mt-2 text-gray-500">0x7EC8e6614A2E3A1E4d6e321376a608666C8B6f8d</h3>
@@ -31,7 +31,7 @@ const NFTCard = () => {
 
 const NFTCard2 = () => {
   return (
-    <div className="border flex flex-col rounded-lg gap-2">
+    <div className="border-2 flex flex-col rounded-lg gap-2">
       <div className="bg-gradient-to-r from-green-500 to-blue-500 w-56 h-40 rounded-t-md"></div>
       <div className="flex flex-col px-2 pb-2 justify-center">
         <h3 className="font-semibold text-sm">Bonafide Certificate</h3>
