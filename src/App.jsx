@@ -2,15 +2,17 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './pages/Header';
 import Login from './pages/Login';
 import SignUp from './pages/Signup';
+import { UserProfile } from './pages/UserProfile';
 
 function App() {
   return (
     <div className='flex flex-col'>
       <BrowserRouter>
       <HeaderWithConditionalRendering />
-      
+
       <Routes>
         <Route path='/login' element={<Login />}/>
+        <Route path='/user/:id' element={<UserProfile />}/>
       </Routes>
     </BrowserRouter>
     </div>
