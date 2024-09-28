@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import axios from 'axios';
 import { Button } from "@/components/ui/button";
 import { useParams } from 'react-router-dom';
@@ -9,6 +9,7 @@ import useWallet from '@/hooks/useWallet';
 import { toast } from 'react-toastify';
 import { deleteNewDocumentRequestSendMethod } from '@/contract/vault/sendMethods';
 import 'react-toastify/dist/ReactToastify.css'
+import { getOrgNameMethod } from '@/contract/vault/methods';
 
 const jsonData = {
 
@@ -26,7 +27,15 @@ const CertificateForm = () => {
   const { userAddress, requestId, docType } = useParams();
   const walletAddress = localStorage.getItem('walletAddress');
   const [metadataUri, setMetadataUri] = useState('');
-  const {signer} = useWallet();
+  const {address ,signer} = useWallet();
+  const [ orgName, setOrgName ] = useState('');
+  const getNameFromAddress = async () => {
+    const name2 = await getOrgNameMethod(address, address);
+    setOrgName(name2);
+  }
+  useEffect(() => {
+    getNameFromAddress();
+  },[]);
 
   const [formData, setFormData] = useState({
     documentType: `${docType}`,
