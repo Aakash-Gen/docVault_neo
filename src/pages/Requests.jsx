@@ -3,7 +3,7 @@ import { User, Check, X , WalletMinimal} from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useQuery } from 'react-query'
 import { getUserNameMethod, getNewDocumentRequestsMethod, getVerificationRequestsMethod } from '@/contract/vault/methods'
-import {  deleteVerificationRequestSendMethod } from '@/contract/vault/sendMethod'
+import {  deleteVerificationRequestSendMethod } from '@/contract/vault/sendMethods'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import useWallet from '@/hooks/useWallet';
 import { CheckIcon, XIcon } from 'lucide-react'
