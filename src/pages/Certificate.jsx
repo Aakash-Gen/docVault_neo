@@ -7,7 +7,7 @@ import { mintNFT } from '@/contract/nft/methods';
 import { payToMint2 } from '@/contract/nft/methods';
 import useWallet from '@/hooks/useWallet';
 import { toast } from 'react-toastify';
-import { deleteNewDocumentRequestSendMethod } from '@/contract/vault/sendMethod';
+import { deleteNewDocumentRequestSendMethod } from '@/contract/vault/sendMethods';
 import 'react-toastify/dist/ReactToastify.css'
 
 const jsonData = {

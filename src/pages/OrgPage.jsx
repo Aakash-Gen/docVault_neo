@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { getOrgNameMethod } from "@/contract/vault/methods";
-import { addNewDocumentRequestSendMethod } from "@/contract/vault/sendMethod";
+import { addNewDocumentRequestSendMethod } from "@/contract/vault/sendMethods";
 import useWallet from '@/hooks/useWallet';
 import { v4 as uuidv4 } from 'uuid';
 

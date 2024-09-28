@@ -6,7 +6,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { PlusIcon } from 'lucide-react'
 import { getUserOrganizationsMethod, getOrgNameMethod } from "../contract/vault/methods"
-import { requestToJoinOrgSendMethod } from "../contract/vault/sendMethod"
+import { requestToJoinOrgSendMethod } from "../contract/vault/sendMethods"
 import { useQuery } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 import {
