@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './pages/Header';
 import Login from './pages/Login';
-import SignUp from './pages/Signup';
 import { UserProfile } from './pages/UserProfile';
 
 function App() {
