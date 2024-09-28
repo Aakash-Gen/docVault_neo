@@ -16,19 +16,18 @@ function Header() {
     console.log('Updating user role from localStorage');
     const role = localStorage.getItem('role');
     setUserRole(role);
-  }, []); // Add empty dependency array to run only once on component mount
+  }, []);
 
   const handleMenuClose = () => {
     setIsClosing(true);
     setTimeout(() => {
       setToggleMenu(false);
       setIsClosing(false);
-    }, 300); // Delay matches animation duration
+    }, 300);
   };
 
   const handleLogout = () => {
-    // Add any required logic for logout, such as clearing localStorage
-    localStorage.removeItem('role'); // Example: removing user role on logout
+    localStorage.removeItem('role');
     navigate('/login');
   };
 
@@ -40,17 +39,18 @@ function Header() {
       case 'user':
         return (
           <>
-            <div className={`hover:cursor-pointer ${isActive('/myfiles')}`} onClick={() => navigate('/myfiles')}>All Files</div>
-            <div className={`hover:cursor-pointer ${isActive('/myorgs')}`} onClick={() => navigate('/myorgs')}>My Organisations</div>
-            <div className={`hover:cursor-pointer ${isActive('/verifydocs')}`} onClick={() => navigate('/verifydocs')}>Verify NFTs</div>
+            <div className={`hover:cursor-pointer text-sm ${isActive('/myfiles')}`} onClick={() => navigate('/myfiles')}>All Files</div>
+            <div className={`hover:cursor-pointer text-sm ${isActive('/myorgs')}`} onClick={() => navigate('/myorgs')}>My Organisations</div>
+            <div className={`hover:cursor-pointer text-sm ${isActive('/verifydocs')}`} onClick={() => navigate('/verifydocs')}>Verify NFTs</div>
+            <div className={`hover:cursor-pointer text-sm ${isActive('/verifydocs')}`} onClick={() => navigate('/verifydocs')}>Verify NFTs</div>
           </>
         );
       case 'org':
         return (
           <>
-            <div className={`hover:cursor-pointer ${isActive('/members')}`} onClick={() => navigate('/members')}>Members</div>
-            <div className={`hover:cursor-pointer ${isActive('/requests')}`} onClick={() => navigate('/requests')}>Doc Requests</div>
-            <div className={`hover:cursor-pointer ${isActive('/verifydocs')}`} onClick={() => navigate('/verifydocs')}>Verify NFTs</div>
+            <div className={`hover:cursor-pointer text-sm ${isActive('/members')}`} onClick={() => navigate('/members')}>Members</div>
+            <div className={`hover:cursor-pointer text-sm ${isActive('/requests')}`} onClick={() => navigate('/requests')}>Doc Requests</div>
+            <div className={`hover:cursor-pointer text-sm ${isActive('/verifydocs')}`} onClick={() => navigate('/verifydocs')}>Verify NFTs</div>
           </>
         );
       default:
@@ -59,21 +59,19 @@ function Header() {
   };
 
   return (
-    <div className="h-16 w-full bg-gray-800 flex justify-between items-center md:px-12 py-6 text-white">
-      {/* Brand Name */}
-      <div className="hover:cursor-pointer text-[10px] md:text-[20px] text-primaryGreen font-semibold">docVault</div>
+    <div className="h-16 w-full bg-gray-800 flex justify-between items-center gap-14 md:px-16 py-6 text-white">
+      <div className="flex items-baseline gap-12">
+        <div className="hover:cursor-pointer text-2xl text-primaryGreen font-semibold">docVault</div>
 
-      {/* Desktop Menu */}
-      <div className='md:flex justify-evenly gap-20 text-[16px] font-medium hidden'>
-        {renderMenuItems()}
+        <div className='md:flex gap-10 font-medium hidden pb-1'>
+          {renderMenuItems()}
+        </div>
       </div>
 
-      {/* Logout Button */}
       <div className="hover:cursor-pointer hidden md:block font-medium" onClick={handleLogout}>
         <FaSignOutAlt />
       </div>
 
-      {/* Mobile Menu Button */}
       <div className="bg-gray-200 rounded-full p-1 md:hidden">
         {!toggleMenu ? (
           <IoMenu fontSize={26} color="black" className="cursor-pointer" onClick={() => setToggleMenu(true)} />

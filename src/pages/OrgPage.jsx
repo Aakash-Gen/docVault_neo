@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useParams } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Dialog, DialogContent, DialogTitle,DialogTrigger } from "@/components/ui/dialog";
 import {
   Select,
   SelectContent,
@@ -25,9 +26,6 @@ import { FileCard } from './MyFiles';
 function OrgPage() {
   const { address, signer } = useWallet(); 
 
-  const [ activeTab, setActiveTab ] =  useState("tab1");
-  const [ popup, setPopup ] = useState(false);
-  const [ popupTab, setPopupTab ] = useState("requestNewFile");
   const { orgAddress } = useParams();
 
   const [ orgName, setOrgName ] = useState('');
@@ -45,18 +43,6 @@ function OrgPage() {
   useEffect(() => {
     getNameFromAddress();
   },[]);
-
-  const handlePopupTabChange = (tabName) => {
-    setPopupTab(tabName);
-  };
-
-  const handlePopup = () => {
-    setPopup(!popup);
-  };
-
-  const handleTabChange =(tabName)=>{
-    setActiveTab(tabName);
-  }
 
   const onSubmitRequestVerification = () => {
     // TODO: get all files and filter by org name.
@@ -117,126 +103,112 @@ function OrgPage() {
 
 
   return (
-    <div className="bg-gray-900 h-screen px-12">
-        <div className="flex justify-between pt-12 px-6 items-center mb-6">
-            <h1 className="text-white font-bold text-3xl">{orgName}</h1>
-            <ToastContainer />
-            <button 
-              onClick={handlePopup}
-              className='bg-[#27E8A7] w-auto text-black font-bold py-2 px-6 rounded-md hover:bg-[#20C08F] transition-colors'>
+    <div className="bg-gray-900 h-screen px-16 flex flex-col gap-6">
+      <ToastContainer />
+
+      <div className="flex justify-between pt-3 items-center ">
+        <h1 className="text-white font-bold text-3xl">{orgName}</h1>
+        <Dialog>
+          <DialogTrigger>
+            <button
+              className="bg-[#27E8A7] text-black font-bold py-2 px-6 rounded-md hover:bg-[#20C08F] transition-colors"
+            >
               New File
             </button>
-        </div>
-            {popup && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-gray-200 p-6 w-96 rounded-lg">
-              <div className="flex mb-8 gap-2">
-                <Tabs defaultValue="new" className="w-full">
-                  <div className="flex justify-start mb-8">
-                    <TabsList className="grid w-full h-min grid-cols-2 bg-gray-800 text-white">
-                      <TabsTrigger value="new" className="py-1.5 text-sm flex items-center justify-center">
-                        Members
-                      </TabsTrigger>
-                      <TabsTrigger value="verify" className="py-1.5 text-sm flex items-center justify-center">
-                        Requests
-                      </TabsTrigger>
-                    </TabsList>
-                  </div>
-                  <TabsContent value="new">
-                      <div>
-                        <input 
-                          type="text" 
-                          placeholder="Title" 
-                          className="rounded-lg w-full p-2 mb-4 border border-gray-600 bg-gray-700 text-white focus:outline-none focus:border-primaryColor" 
-                          value={title}
-                          onChange={(e) => setTitle(e.target.value)}
-                        />
-                        <input 
-                          type="text" 
-                          placeholder="Description" 
-                          className="rounded-lg w-full p-2 mb-4 border border-gray-600 bg-gray-700 text-white focus:outline-none focus:border-primaryColor" 
-                          value={description}
-                          onChange={(e) => setDescription(e.target.value)}
-                        />
-                        <Select value={documentType} onValueChange={setDocumentType}>
-                          <SelectTrigger className="w-full bg-white">
-                            <SelectValue placeholder="Select Doc Type" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="BONAFIDE">Bonafide Certificate</SelectItem>
-                            <SelectItem value="MERIT">Merit Award Certificate</SelectItem>
-                            <SelectItem value="MEDICAL">Medical Certificate</SelectItem>
-                            <SelectItem value="SCHOOL">School leaving Certificate</SelectItem>
-                            <SelectItem value="LOR">Letter of Recommendation</SelectItem>
-                            <SelectItem value="APPOINTMENT">Appointment letter</SelectItem>
-                            <SelectItem value="OTHER">Other</SelectItem>
-                          </SelectContent>
-                        </Select>
+          </DialogTrigger>
+          <DialogTitle className="hidden"></DialogTitle>
+          <DialogContent className="bg-gray-200">
+              <Tabs defaultValue="new" className="w-full mt-4">
+                <div className="flex justify-start mb-8">
+                  <TabsList className="grid w-full h-min grid-cols-2 bg-gray-800 text-white">
+                    <TabsTrigger value="new" className="py-1.5 text-sm flex items-center justify-center">
+                      Members
+                    </TabsTrigger>
+                    <TabsTrigger value="verify" className="py-1.5 text-sm flex items-center justify-center">
+                      Requests
+                    </TabsTrigger>
+                  </TabsList>
+                </div>
+                <TabsContent value="new">
+                    <div>
+                      <input 
+                        type="text" 
+                        placeholder="Title" 
+                        className="rounded-lg w-full p-2 mb-4 border border-gray-600 bg-gray-700 text-white focus:outline-none focus:border-primaryColor" 
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                      />
+                      <input 
+                        type="text" 
+                        placeholder="Description" 
+                        className="rounded-lg w-full p-2 mb-4 border border-gray-600 bg-gray-700 text-white focus:outline-none focus:border-primaryColor" 
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                      />
+                      <Select value={documentType} onValueChange={setDocumentType}>
+                        <SelectTrigger className="w-full bg-white">
+                          <SelectValue placeholder="Select Doc Type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="BONAFIDE">Bonafide Certificate</SelectItem>
+                          <SelectItem value="MERIT">Merit Award Certificate</SelectItem>
+                          <SelectItem value="MEDICAL">Medical Certificate</SelectItem>
+                          <SelectItem value="SCHOOL">School leaving Certificate</SelectItem>
+                          <SelectItem value="LOR">Letter of Recommendation</SelectItem>
+                          <SelectItem value="APPOINTMENT">Appointment letter</SelectItem>
+                          <SelectItem value="OTHER">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
 
-                        <div className="flex justify-end mt-8">
-                          <button
-                            type="button"
-                            className="bg-black text-white px-4 py-2 rounded mr-2"
-                            onClick={handlePopup}
-                          >
-                            Cancel
-                          </button>
-                          <button
-                            type="submit"
-                            onClick={onNewDocumentRequest}
-                            className="bg-primaryGreen text-black font-medium px-4 py-2 rounded"
-                          >
-                            Request
-                          </button>
-                        </div>
+                      <div className="flex justify-end mt-8">
+                        <button
+                          type="submit"
+                          onClick={onNewDocumentRequest}
+                          className="bg-primaryGreen text-black font-medium px-4 py-2 rounded"
+                        >
+                          Request
+                        </button>
                       </div>
-                  </TabsContent>
-                  <TabsContent value="verify">
-                      <div>
-                        <Select value={documentType} onValueChange={setDocumentType}>
-                          <SelectTrigger className="w-full bg-white">
-                            <SelectValue placeholder="Select Doc Type" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="BONAFIDE">Bonafide Certificate</SelectItem>
-                            <SelectItem value="MERIT">Merit Award Certificate</SelectItem>
-                            <SelectItem value="MEDICAL">Medical Certificate</SelectItem>
-                            <SelectItem value="SCHOOL">School leaving Certificate</SelectItem>
-                            <SelectItem value="LOR">Letter of Recommendation</SelectItem>
-                            <SelectItem value="APPOINTMENT">Appointment letter</SelectItem>
-                            <SelectItem value="OTHER">Other</SelectItem>
-                          </SelectContent>
-                        </Select>
+                    </div>
+                </TabsContent>
+                <TabsContent value="verify">
+                    <div>
+                      <Select value={documentType} onValueChange={setDocumentType}>
+                        <SelectTrigger className="w-full bg-white">
+                          <SelectValue placeholder="Select Doc Type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="BONAFIDE">Bonafide Certificate</SelectItem>
+                          <SelectItem value="MERIT">Merit Award Certificate</SelectItem>
+                          <SelectItem value="MEDICAL">Medical Certificate</SelectItem>
+                          <SelectItem value="SCHOOL">School leaving Certificate</SelectItem>
+                          <SelectItem value="LOR">Letter of Recommendation</SelectItem>
+                          <SelectItem value="APPOINTMENT">Appointment letter</SelectItem>
+                          <SelectItem value="OTHER">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
 
-                        <div className="mb-4 mt-5">
-                          <FileUpload onChange={handleFileChange} />
-                        </div>
-
-                        <div className="flex justify-end">
-                          <button
-                            type="button"
-                            className="bg-black text-white px-4 py-2 rounded mr-2"
-                            onClick={handlePopup}
-                          >
-                            Cancel
-                          </button>
-                          <button
-                            type="submit"
-                            className="bg-primaryGreen text-black font-medium px-4 py-2 rounded"
-                            onClick={onSubmitRequestVerification}
-                          >
-                            Submit
-                          </button>
-                        </div>
+                      <div className="mb-4 mt-5">
+                        <FileUpload onChange={handleFileChange} />
                       </div>
-                  </TabsContent>
-                </Tabs>
-              </div>
-            </div>
-          </div>
-        )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4">
+                      <div className="flex justify-end">
+                        <button
+                          type="submit"
+                          className="bg-primaryGreen text-black font-medium px-4 py-2 rounded"
+                          onClick={onSubmitRequestVerification}
+                        >
+                          Submit
+                        </button>
+                      </div>
+                    </div>
+                </TabsContent>
+              </Tabs>
+          </DialogContent>
+        </Dialog>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {
           filesLoading && (
             <div className='w-full rounded-2xl px-3 py-4 text-gray-400 gap-2 justify-between flex'>

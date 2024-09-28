@@ -14,6 +14,7 @@ import IpfsHash from './pages/ipfshash'
 import Firepage from './pages/Firepage';
 import PredictionForm from './pages/Prediction';
 import HomePage from './pages/HomePage';
+import { UserProfile } from './pages/UserProfile';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path='/requests' element={<Requests />} />1
           <Route path="/org/:orgAddress" element={<OrgPage/>} />
           <Route path='/members' element={<Members />} />
+          <Route path='/user/:id' element={<UserProfile />} />
           {/* <Route path='/copy' element={<Copy/>}/> */}
           {/* <Route path='/ipfshash' element={<IpfsHash/>}/> */}
         </Routes>

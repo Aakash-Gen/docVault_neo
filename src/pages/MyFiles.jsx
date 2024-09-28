@@ -5,24 +5,27 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { getAllNFTs } from '../contract/methods';
 import { useQuery } from 'react-query';
 import { useEffect } from 'react';
 import { fetchMetadataFromIPFS } from '../utils/fetchMetadataFromIPFS';
 import { extractIpfsHash } from '../utils/extractIpfsHash';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 function MyFiles() {
-  const [ activeTab, setActiveTab ] = useState("tab1");
-  const [ popup, setPopup ] = useState(false);
-  const [ popupTab, setPopupTab ] = useState("requestNewFile");
   const [ selectedFile, setSelectedFile ] = useState(null);
   const [ predictionResult, setPredictionResult ] = useState(null);
-  const [success, setSuccess] = useState("")
-
-  const handlePopup = () => {
-    setPopup(!popup);
-  };
+  const [ success, setSuccess ] = useState("")
+  const [ title, setTitle ] = useState('');
+  const [ description, setDescription ] = useState('');
+  const [ documentType, setDocumentType ] = useState("");
 
   const handleTabChange =(tabName)=>{
     setActiveTab(tabName);
@@ -132,6 +135,7 @@ function MyFiles() {
     const tokenPromises = result.map(async (token) => {
         const hash = extractIpfsHash(token.tokenURI)
         const metadata = await fetchMetadataFromIPFS(hash);
+        console.log('metadata: ', metadata);
         return { ...token, metadata };
     });
 
@@ -148,87 +152,123 @@ function MyFiles() {
 
   return (
     <div className="bg-[#0D111D] h-screen px-12">
+    <ToastContainer />
+
     <div className="flex justify-between pt-12 lg:px-6 items-center mb-4">
       <h1 className="text-white font-bold text-3xl">My Files</h1>
-      <ToastContainer />
-      <button
-        onClick={handlePopup}
-        className="bg-[#27E8A7] w-auto text-black font-bold py-2 px-6 rounded-md hover:bg-[#20C08F] transition-colors"
-      >
-        New File
-      </button>
-    </div>
+        {/* <Dialog>
+          <DialogTrigger>
+            <button
+              className="bg-[#27E8A7] text-black font-bold py-2 px-6 rounded-md hover:bg-[#20C08F] transition-colors"
+            >
+              New File
+            </button>
+          </DialogTrigger>
+          <DialogTitle className="hidden"></DialogTitle>
+          <DialogContent className="bg-gray-200">
+              <Tabs defaultValue="new" className="w-full mt-4">
+                <div className="flex justify-start mb-8">
+                  <TabsList className="grid w-full h-min grid-cols-2 bg-gray-800 text-white">
+                    <TabsTrigger value="new" className="py-1.5 text-sm flex items-center justify-center">
+                      Members
+                    </TabsTrigger>
+                    <TabsTrigger value="verify" className="py-1.5 text-sm flex items-center justify-center">
+                      Requests
+                    </TabsTrigger>
+                  </TabsList>
+                </div>
+                <TabsContent value="new">
+                    <div>
+                      <input 
+                        type="text" 
+                        placeholder="Title" 
+                        className="rounded-lg w-full p-2 mb-4 border border-gray-600 bg-gray-700 text-white focus:outline-none focus:border-primaryColor" 
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                      />
+                      <input 
+                        type="text" 
+                        placeholder="Description" 
+                        className="rounded-lg w-full p-2 mb-4 border border-gray-600 bg-gray-700 text-white focus:outline-none focus:border-primaryColor" 
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                      />
+                      <Select value={documentType} onValueChange={setDocumentType}>
+                        <SelectTrigger className="w-full bg-white">
+                          <SelectValue placeholder="Select Doc Type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="BONAFIDE">Bonafide Certificate</SelectItem>
+                          <SelectItem value="MERIT">Merit Award Certificate</SelectItem>
+                          <SelectItem value="MEDICAL">Medical Certificate</SelectItem>
+                          <SelectItem value="SCHOOL">School leaving Certificate</SelectItem>
+                          <SelectItem value="LOR">Letter of Recommendation</SelectItem>
+                          <SelectItem value="APPOINTMENT">Appointment letter</SelectItem>
+                          <SelectItem value="OTHER">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
 
-    {popup && (
-      <Dialog open={popup} onOpenChange={setPopup}>
-        <DialogTitle></DialogTitle>
-        <DialogContent className="bg-gray-900 border-none text-white py-7 px-8 max-w-[52vh] overflow-auto">
-          <div className="flex mb-8 gap-2 h-80">
-            <Tabs defaultValue={popupTab}>
-              <TabsList className="grid h-min grid-cols-2 mb-[5vh] bg-gray-600 text-white">
-                <TabsTrigger value="requestNewFile" className=" text-sm flex items-center justify-center">
-                  Request New File
-                </TabsTrigger>
-                <TabsTrigger value="requestVerification" className=" text-sm flex items-center justify-center">
-                  Request Verification
-                </TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="requestNewFile">
-                <form>
-                  <div className="mb-8 w-[40vh]">
-                    <label className="block text-gray-300 font-semibold">Document Type</label>
-                    <select className="w-full border border-gray-300 p-2 mt-2 px-2 rounded-md">
-                      <option value="">Select Document</option>
-                      <option value="document1">Bonafide Certificate</option>
-                      <option value="document2">Merit Award Certificate</option>
-                    </select>
-                  </div>
-
-                  <div className="mb-8">
-                    <label className="block text-gray-300 font-semibold">Organization</label>
-                    <select className="w-full border border-gray-300 p-2 mt-2 rounded-md">
-                      <option value="">Select Organization</option>
-                      <option value="org1">Netaji Subhas University of Technology</option>
-                    </select>
-                  </div>
-
-                  <div className="flex justify-end">
-                    <button type="submit" className="bg-primaryGreen text-black font-medium px-4 py-2 rounded">
-                      Request
-                    </button>
-                  </div>
-                </form>
-              </TabsContent>
-
-              <TabsContent value="requestVerification">
-                <form>
-                  <div className="mb-4  w-[40vh]">
-                  
-                  
-                    {
-                      // fileUrl?<img src={fileUrl} />:  
-                      <div className="flex justify-between justify-content items-center">
-                      <label className="block text-gray-300 font-semibold">Upload File</label>
-                      <FileUpload type="file" onChange={handleFileChange} />
+                      <div className="flex justify-end mt-8">
+                        <button
+                          type="button"
+                          className="bg-black text-white px-4 py-2 rounded mr-2"
+                          onClick={handlePopup}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="submit"
+                          onClick={onNewDocumentRequest}
+                          className="bg-primaryGreen text-black font-medium px-4 py-2 rounded"
+                        >
+                          Request
+                        </button>
                       </div>
-                      }
-                      
-                 
-                  </div>
+                    </div>
+                </TabsContent>
+                <TabsContent value="verify">
+                    <div>
+                      <Select value={documentType} onValueChange={setDocumentType}>
+                        <SelectTrigger className="w-full bg-white">
+                          <SelectValue placeholder="Select Doc Type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="BONAFIDE">Bonafide Certificate</SelectItem>
+                          <SelectItem value="MERIT">Merit Award Certificate</SelectItem>
+                          <SelectItem value="MEDICAL">Medical Certificate</SelectItem>
+                          <SelectItem value="SCHOOL">School leaving Certificate</SelectItem>
+                          <SelectItem value="LOR">Letter of Recommendation</SelectItem>
+                          <SelectItem value="APPOINTMENT">Appointment letter</SelectItem>
+                          <SelectItem value="OTHER">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
 
-                  <div className="flex justify-end">
-                    <button type="submit" className="bg-primaryGreen text-black font-medium px-4 py-2 rounded">
-                      Submit
-                    </button>
-                  </div>
-                </form>
-              </TabsContent>
-            </Tabs>
-          </div>
-        </DialogContent>
-      </Dialog>
-    )}
+                      <div className="mb-4 mt-5">
+                        <FileUpload onChange={handleFileChange} />
+                      </div>
+
+                      <div className="flex justify-end">
+                        <button
+                          type="button"
+                          className="bg-black text-white px-4 py-2 rounded mr-2"
+                          onClick={handlePopup}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="submit"
+                          className="bg-primaryGreen text-black font-medium px-4 py-2 rounded"
+                          onClick={onSubmitRequestVerification}
+                        >
+                          Submit
+                        </button>
+                      </div>
+                    </div>
+                </TabsContent>
+              </Tabs>
+          </DialogContent>
+        </Dialog> */}
+    </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4">
         {
