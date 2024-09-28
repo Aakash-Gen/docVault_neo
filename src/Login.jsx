@@ -97,7 +97,7 @@ function UserForm({ navigate }) {
 
         localStorage.setItem('role', 'user');
         localStorage.setItem('walletAddress', account);
-        navigate('/myfiles'); 
+        navigate('/myorgs'); 
 
       } else {
 
@@ -110,7 +110,7 @@ function UserForm({ navigate }) {
 
         localStorage.setItem('role', 'user');
         localStorage.setItem('walletAddress', account);
-        navigate('/myfiles'); 
+        navigate('/myorgs'); 
 
       }
     } catch (error) {

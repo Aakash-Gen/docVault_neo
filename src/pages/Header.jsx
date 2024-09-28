@@ -9,6 +9,7 @@ function Header() {
   const [toggleMenu, setToggleMenu] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [userRole, setUserRole] = useState(localStorage.getItem('role'));
+  const [ walletAddress, setWalletAddress ] = useState(localStorage.getItem('walletAddress'));
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -39,10 +40,9 @@ function Header() {
       case 'user':
         return (
           <>
-            <div className={`hover:cursor-pointer text-sm ${isActive('/myfiles')}`} onClick={() => navigate('/myfiles')}>All Files</div>
-            <div className={`hover:cursor-pointer text-sm ${isActive('/myorgs')}`} onClick={() => navigate('/myorgs')}>My Organisations</div>
-            <div className={`hover:cursor-pointer text-sm ${isActive('/verifydocs')}`} onClick={() => navigate('/verifydocs')}>Verify NFTs</div>
-            <div className={`hover:cursor-pointer text-sm ${isActive('/verifydocs')}`} onClick={() => navigate('/verifydocs')}>Verify NFTs</div>
+            <div className={`hover:cursor-pointer text-sm ${isActive('/myorgs')}`} onClick={() => navigate('/myorgs')}>Organisations</div>
+            {/* <div className={`hover:cursor-pointer text-sm ${isActive('/verifydocs')}`} onClick={() => navigate('/verifydocs')}>Verify NFTs</div> */}
+            <div className={`hover:cursor-pointer text-sm ${isActive(`/user/${walletAddress}`)}`} onClick={() => navigate(`/user/${walletAddress}`)}>Profile</div>
           </>
         );
       case 'org':
@@ -61,7 +61,7 @@ function Header() {
   return (
     <div className="h-16 w-full bg-gray-800 flex justify-between items-center gap-14 md:px-16 py-6 text-white">
       <div className="flex items-baseline gap-12">
-        <div className="hover:cursor-pointer text-2xl text-primaryGreen font-semibold">docVault</div>
+        <div className="text-2xl text-primaryGreen font-semibold">docVault</div>
 
         <div className='md:flex gap-10 font-medium hidden pb-1'>
           {renderMenuItems()}

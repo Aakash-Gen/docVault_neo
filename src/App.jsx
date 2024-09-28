@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import TestPage from './pages/TestPage';
-import MyFiles from './pages/MyFiles';
+import ProfileView from './pages/ProfileView';
 import VerifyDocs from './pages/VerifyDocs';
 import Login from './Login';
 import MyOrgs from './pages/MyOrgs';
@@ -27,7 +27,7 @@ function App() {
           {/* <Route path='/firepage' element={<Firepage />} /> */}
           {/* <Route path='/prediction' element={<PredictionForm/>}/> */}
           
-          <Route path="/myfiles" element={<MyFiles />} />
+          {/* <Route path="/myfiles" element={<MyFiles />} /> */}
           <Route path="/verifydocs" element={<VerifyDocs />} />
           <Route path='/login' element={<Login />}/>
           <Route path='/certificate/:userAddress/:requestId/type/:docType' element={ 
@@ -40,7 +40,7 @@ function App() {
           <Route path='/requests' element={<Requests />} />1
           <Route path="/org/:orgAddress" element={<OrgPage/>} />
           <Route path='/members' element={<Members />} />
-          <Route path='/user/:id' element={<UserProfile />} />
+          <Route path='/user/:id' element={<ProfileView />} />
           {/* <Route path='/copy' element={<Copy/>}/> */}
           {/* <Route path='/ipfshash' element={<IpfsHash/>}/> */}
         </Routes>

@@ -6,7 +6,7 @@ const HomePage = () => {
     const accounts = await window.ethereum.request({ method: 'eth_accounts' });
     if (accounts.length) {
       console.log(`You're connected to: ${accounts[0]}`);
-      window.location.href = '/myfiles';
+      window.location.href = '/myorgs';
     } else {
       console.log("Metamask is not connected");
       window.location.href = '/login';

@@ -21,7 +21,7 @@ import { getAllNFTs } from '../contract/methods';
 import { fetchMetadataFromIPFS } from '../utils/fetchMetadataFromIPFS';
 import { extractIpfsHash } from '../utils/extractIpfsHash';
 import { useQuery } from 'react-query';
-import { FileCard } from './MyFiles';
+import { FileCard } from './ProfileView';
 
 function OrgPage() {
   const { address, signer } = useWallet(); 
@@ -107,7 +107,7 @@ function OrgPage() {
       <ToastContainer />
 
       <div className="flex justify-between pt-3 items-center ">
-        <h1 className="text-white font-bold text-3xl">{orgName}</h1>
+        <h1 className="text-gray-300 font-bold text-2xl">{orgName}</h1>
         <Dialog>
           <DialogTrigger>
             <button
@@ -208,7 +208,7 @@ function OrgPage() {
         </Dialog>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         {
           filesLoading && (
             <div className='w-full rounded-2xl px-3 py-4 text-gray-400 gap-2 justify-between flex'>
