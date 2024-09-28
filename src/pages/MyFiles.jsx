@@ -113,7 +113,7 @@ function MyFiles() {
         data: fileData,
         headers: {
           Authorization: `Bearer ${import.meta.env.VITE_PINATA_JWT}`,  
-        }
+        },
       });
 
       const fileUrl = "https://gateway.pinata.cloud/ipfs/" + responseData.data.IpfsHash;
