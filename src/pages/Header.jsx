@@ -59,7 +59,7 @@ function Header() {
   };
 
   return (
-    <div className="h-12 w-full bg-gray-800 flex justify-between items-center md:px-12 py-6 text-white">
+    <div className="h-16 w-full bg-gray-800 flex justify-between items-center md:px-12 py-6 text-white">
       {/* Brand Name */}
       <div className="hover:cursor-pointer text-[10px] md:text-[20px] text-primaryGreen font-semibold">docVault</div>
 

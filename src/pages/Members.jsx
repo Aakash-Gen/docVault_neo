@@ -6,8 +6,8 @@ import { CheckIcon, XIcon, UserIcon, UserPlusIcon } from 'lucide-react'
 import { useQuery } from 'react-query'
 import useWallet from '@/hooks/useWallet';
 import { getMembersMethod, getJoinRequestsMethod, getUserNameMethod } from '@/contract/vault/methods'
-import { getMembersSendFormalMethod} from '@/contract/vault/sendMethods'
-import { updateJoinRequestSendMethod } from '@/contract/vault/sendMethods'
+import { getMembersSendFormalMethod} from '@/contract/vault/methods2'
+import { updateJoinRequestSendMethod } from '@/contract/vault/methods2'
 import { useEffect, useState } from 'react'
 import { signMessage } from '@/utils/signMessage';
 import { ToastContainer, toast } from 'react-toastify'

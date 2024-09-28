@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { getAllNFTs } from '../contract/nft/methods';
+import { getAllNFTs } from '../contract/methods';
 import { useQuery } from 'react-query';
 import { useEffect } from 'react';
 import { fetchMetadataFromIPFS } from '../utils/fetchMetadataFromIPFS';
@@ -113,7 +113,7 @@ function MyFiles() {
         data: fileData,
         headers: {
           Authorization: `Bearer ${import.meta.env.VITE_PINATA_JWT}`,  
-        },
+        }
       });
 
       const fileUrl = "https://gateway.pinata.cloud/ipfs/" + responseData.data.IpfsHash;

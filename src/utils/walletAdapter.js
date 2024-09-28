@@ -52,7 +52,6 @@ const sepoliaNetwork = {
   blockExplorerUrls: ['https://sepolia.etherscan.io/'],
 };
 
-
 export const connectToSepolia = async () => {
   const { ethereum } = window;
 
@@ -72,45 +71,6 @@ export const connectToSepolia = async () => {
         await ethereum.request({
           method: 'wallet_addEthereumChain',
           params: [sepoliaNetwork],
-        });
-      } catch (addError) {
-        console.error("Failed to add the network:", addError.message);
-      }
-    } else {
-      console.error("Failed to switch network:", switchError.message);
-    }
-  }
-};
-
-const neoxNetwork = {
-  chainId: '0xBA9304',
-  chainName: 'NEOX Chain',
-  nativeCurrency: {
-    symbol: 'GAS',
-  },
-  rpcUrls: ['https://neoxt4seed1.ngd.network'],
-  blockExplorerUrls: ['https://xt4scan.ngd.network'],
-};
-
-export const connectToNeoX = async () => {
-  const { ethereum } = window;
-
-  if (!ethereum) {
-    window.alert("MetaMask is not installed!");
-    return;
-  }
-
-  try {
-    await ethereum.request({
-      method: 'wallet_switchEthereumChain',
-      params: [{ chainId: neoxNetwork.chainId }],
-    });
-  } catch (switchError) {
-    if (switchError.code === 4902) {
-      try {
-        await ethereum.request({
-          method: 'wallet_addEthereumChain',
-          params: [neoxNetwork],
         });
       } catch (addError) {
         console.error("Failed to add the network:", addError.message);

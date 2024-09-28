@@ -6,7 +6,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { PlusIcon } from 'lucide-react'
 import { getUserOrganizationsMethod, getOrgNameMethod } from "../contract/vault/methods"
-import { requestToJoinOrgSendMethod } from "../contract/vault/sendMethods"
+import { requestToJoinOrgSendMethod } from "../contract/vault/methods2"
 import { useQuery } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 import {
@@ -121,9 +121,7 @@ export default function Component() {
           }
           {
             orgsLoading || orgs === undefined 
-            ? <div className='w-full rounded-2xl px-3 py-4 text-gray-400 gap-2 justify-between flex'>
-                <span className='font-bold text-2xl'>Loading...</span>
-              </div>
+            ? null
             : orgs.length === 0
               ? (
                 <div className='w-full rounded-2xl px-3 py-4 text-gray-400 gap-2 justify-between flex'>

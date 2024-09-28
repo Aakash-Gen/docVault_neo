@@ -20,7 +20,7 @@ app.post('/generate-certificate', async (req, res) => {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
 
-  const htmlTemplate = fs.readFileSync(path.resolve(__dirname,`${data.documentType}.html`), 'utf8');
+  const htmlTemplate = fs.readFileSync(path.resolve(__dirname, 'certificate.html'), 'utf8');
 
   const html = htmlTemplate
     .replace('{{institutionName}}', data.institutionName)

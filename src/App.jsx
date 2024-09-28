@@ -2,18 +2,18 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import TestPage from './pages/TestPage';
 import MyFiles from './pages/MyFiles';
 import VerifyDocs from './pages/VerifyDocs';
-import Login from './pages/Login';
+import Login from './Login';
 import MyOrgs from './pages/MyOrgs';
 import Certificate from './pages/Certificate';
 import Requests from './pages/Requests';
 import OrgPage from './pages/OrgPage';
 import Members from './pages/Members';
-// import Copy from './copy';
+import Copy from './copy';
 import Header from './pages/Header';
-import IpfsHash from './components/IpfsHash';
+import IpfsHash from './pages/ipfshash'
 import Firepage from './pages/Firepage';
 import PredictionForm from './pages/Prediction';
-import { UserProfile } from './pages/UserProfile';
+import HomePage from './pages/HomePage';
 
 function App() {
   return (
@@ -22,13 +22,13 @@ function App() {
       <HeaderWithConditionalRendering />
 
         <Routes>
-          <Route path='/' element={<TestPage />} />
-          <Route path='/firepage' element={<Firepage />} />
-          <Route path='prediction' element={<PredictionForm/>}/>
+          <Route path='/' element={<HomePage />} />
+          {/* <Route path='/firepage' element={<Firepage />} /> */}
+          {/* <Route path='/prediction' element={<PredictionForm/>}/> */}
+          
           <Route path="/myfiles" element={<MyFiles />} />
           <Route path="/verifydocs" element={<VerifyDocs />} />
           <Route path='/login' element={<Login />}/>
-          <Route path='/user/:id' element={<UserProfile/>}/>
           <Route path='/certificate/:userAddress/:requestId/type/:docType' element={ 
             <Layout>
                 <Certificate />
@@ -40,7 +40,7 @@ function App() {
           <Route path="/org/:orgAddress" element={<OrgPage/>} />
           <Route path='/members' element={<Members />} />
           {/* <Route path='/copy' element={<Copy/>}/> */}
-          <Route path='/ipfshash' element={<IpfsHash/>}/>
+          {/* <Route path='/ipfshash' element={<IpfsHash/>}/> */}
         </Routes>
     </BrowserRouter>
     </div>

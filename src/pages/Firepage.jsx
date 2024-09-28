@@ -1,7 +1,7 @@
 import { useState } from 'react';
-// import { ethers } from 'ethers';
+import { ethers } from 'ethers';
 import { Button } from '../components/ui/button'
-import { payToMint2, getBalance, getCount, getAllNFTs, mintNFT, safeMintNFT } from '../contract/nft/methods'
+import { payToMint2, getBalance, getCount, getAllNFTs, mintNFT, safeMintNFT } from '../contract/methods'
 import useWallet from '@/hooks/useWallet';
 
 function Firepage() {

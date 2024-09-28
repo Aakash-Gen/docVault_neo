@@ -1,15 +1,14 @@
-import React, { useState , useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { Button } from "@/components/ui/button";
 import { useParams } from 'react-router-dom';
 import { pinJsonToIPFS } from '@/utils/uploadJsonToIpfs';
-import { mintNFT } from '@/contract/nft/methods';
-import { payToMint2 } from '@/contract/nft/methods';
+import { mintNFT } from '@/contract/methods';
+import { payToMint2 } from '@/contract/methods';
 import useWallet from '@/hooks/useWallet';
 import { toast } from 'react-toastify';
-import { deleteNewDocumentRequestSendMethod } from '@/contract/vault/sendMethods';
+import { deleteNewDocumentRequestSendMethod } from '@/contract/vault/methods2';
 import 'react-toastify/dist/ReactToastify.css'
-import { getOrgNameMethod } from '@/contract/vault/methods';
 
 const jsonData = {
 
@@ -27,15 +26,7 @@ const CertificateForm = () => {
   const { userAddress, requestId, docType } = useParams();
   const walletAddress = localStorage.getItem('walletAddress');
   const [metadataUri, setMetadataUri] = useState('');
-  const {address ,signer} = useWallet();
-  const [ orgName, setOrgName ] = useState('');
-  const getNameFromAddress = async () => {
-    const name2 = await getOrgNameMethod(address, address);
-    setOrgName(name2);
-  }
-  useEffect(() => {
-    getNameFromAddress();
-  },[]);
+  const {signer} = useWallet();
 
   const [formData, setFormData] = useState({
     documentType: `${docType}`,

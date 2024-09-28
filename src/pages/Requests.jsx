@@ -3,7 +3,7 @@ import { User, Check, X , WalletMinimal} from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useQuery } from 'react-query'
 import { getUserNameMethod, getNewDocumentRequestsMethod, getVerificationRequestsMethod } from '@/contract/vault/methods'
-import {  deleteVerificationRequestSendMethod } from '@/contract/vault/sendMethods'
+import {  deleteVerificationRequestSendMethod } from '@/contract/vault/methods2'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import useWallet from '@/hooks/useWallet';
 import { CheckIcon, XIcon } from 'lucide-react'
@@ -71,15 +71,6 @@ export default function Requests() {
                             docType={request.docType}
                             publisher={request.publisher}
                             newDoc={true}
-                            link={'https://gateway.pinata.cloud/ipfs/QmY92GQTaHGyrFW4KLYLo7rveeMhzgcWDUHmvzqxeCL6wJ'}
-                            // key={1}
-                            // id={1}
-                            // title={'hello'}
-                            // description={'hello'}
-                            // docType={file}
-                            // publisher={123}
-                            // newDoc={true}
-                            // link={'https://gateway.pinata.cloud/ipfs/QmY92GQTaHGyrFW4KLYLo7rveeMhzgcWDUHmvzqxeCL6wJ'}
                           />
                         ))
                       )
@@ -190,11 +181,8 @@ function RequestCard(props) {
   return (
     <div className="w-full bg-gray-800 rounded-2xl px-6 py-4 text-gray-100 gap-2 flex-col flex">
       <div className='flex gap-2 items-baseline'>
-      <a href={props.link} target="_blank" rel="noopener noreferrer">
         <span className='font-black text-lg'>{props.title}</span>
-      </a>        
-
-      <span className='text-gray-400 font-semibold text-md'>({String(props.address).slice(0, 10)}...)</span>
+        <span className='text-gray-400 font-semibold text-md'>({String(props.address).slice(0, 10)}...)</span>
       </div>
       <span className='text-gray-400 text-sm font-semibold mb-3'>{props.description}</span>
       <div className='flex justify-end items-center'>
