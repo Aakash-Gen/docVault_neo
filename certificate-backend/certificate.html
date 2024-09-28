@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bonafide Certificate</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #f0f0f0;
+            box-sizing: border-box;
+        }
+        .certificate-container {
+            border: 3px solid #000;
+            padding: 30px;
+            max-width: 900px;
+            width: 100%;
+            margin: auto;
+            background: #fff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box; /* Include padding and border in total width and height */
+        }
+        .certificate-header {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            color: #333;
+        }
+        .certificate-body {
+            margin-bottom: 30px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        .certificate-body p {
+            margin: 8px 0;
+        }
+        .certificate-body p strong {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: bold;
+            color: #000;
+        }
+        .signature-section {
+            border-top: 2px dashed #000;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 16px;
+            color: #333;
+        }
+        .signature-section p {
+            margin: 5px 0;
+        }
+        .signature-section img {
+            max-width: 200px;
+            height: auto;
+            border: 1px solid #000;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="certificate-container">
+        <div class="certificate-header">
+            Bonafide Certificate
+        </div>
+        <div class="certificate-body">
+            <p><strong>Issued By:</strong></p>
+            <p>{{institutionName}}</p>
+            <p><strong>Date of Issue:</strong> {{dateOfIssue}}</p>
+            <p><strong>Certificate Number:</strong> {{certificateNumber}}</p>
+            <p><strong>Recipient:</strong></p>
+            <p>Name: {{recipientName}}</p>
+            <p>Course: {{course}}</p>
+            <p>Duration: {{duration}}</p>
+            <p><strong>Purpose:</strong> {{purpose}}</p>
+        </div>
+        <div class="signature-section">
+            <p><strong>Authorized Signature:</strong></p>
+            <p>Name: {{authorizedName}}</p>
+            <p>Designation: {{authorizedDesignation}}</p>
+            <img src="{{signatureImageUrl}}" alt="Signature">
+            <p>Date: {{signatureDate}}</p>
+        </div>
+    </div>
+</body>
+</html>
