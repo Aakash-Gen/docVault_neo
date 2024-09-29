@@ -5,11 +5,13 @@ import { useParams } from 'react-router-dom';
 import { pinJsonToIPFS } from '@/utils/uploadJsonToIpfs';
 import { mintNFT } from '@/contract/methods';
 import { payToMint2 } from '@/contract/methods';
+import { create } from 'ipfs-http-client';
 import useWallet from '@/hooks/useWallet';
 import { toast } from 'react-toastify';
 import { deleteNewDocumentRequestSendMethod } from '@/contract/vault/methods2';
 import { getUserNameMethod } from '@/contract/vault/methods';
 import 'react-toastify/dist/ReactToastify.css'
+import { fetchMetadataFromIPFS } from '@/utils/fetchMetadataFromIPFS';
 
 const jsonData = {
 
@@ -27,11 +29,14 @@ const CertificateForm = () => {
   const { userAddress, requestId, docType } = useParams();
   const walletAddress = localStorage.getItem('walletAddress');
   const [metadataUri, setMetadataUri] = useState('');
-  const {address ,signer} = useWallet();
+  const {signer} = useWallet();
   const [ userName, setUserName ] = useState('');
   const [ orgName, setOrgName ] = useState('');
 
+  const address = localStorage.getItem('walletAddress');
   const getNameFromAddress = async () => {
+    console.log('Address:', address);
+    console.log('User Address:', userAddress);
     const nameUser = await getUserNameMethod(address, userAddress);
     const nameOrg = await getUserNameMethod(address, address);
     setUserName(nameUser);
@@ -47,11 +52,11 @@ const CertificateForm = () => {
     dateOfIssue: '',
     recipientName: `${userName}`,
     course: '',
-    duration: '',
+    duration: 'just nothing',
     position: '',
     field: '',
     jobTitle: '',
-    reason: '',
+    reason: 'not specific',
     authorizedName: `${orgName}`,
   });
 
@@ -64,31 +69,10 @@ const CertificateForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const fetchMetadataFromIPFS = async (ipfsHash) => {
-    try {
-      const metadataUrl = `https://gateway.pinata.cloud/ipfs/${ipfsHash}`;
-      console.log('Fetching metadata from IPFS:', metadataUrl);
-  
-      // Fetch the metadata JSON directly and parse it
-      const response = await fetch(metadataUrl);
-      
-      // Check if the response is okay, then parse it as JSON
-      if (!response.ok) {
-        throw new Error('Failed to fetch metadata');
-      }
-  
-      const metadata = await response.json();  // This is the parsed JSON
-      return metadata;  // Return the parsed JSON metadata
-    } catch (error) {
-      console.error('Error fetching metadata from IPFS:', error);
-      return null;
-    }
-  };
-
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('http://localhost:5001/generate-certificate', formData, {
+      const response = await axios.post('https://9c9f1t91-5001.inc1.devtunnels.ms/generate-certificate', formData, {
         responseType: 'blob',
       });
       console.log('Certificate generated:', response);
@@ -157,6 +141,9 @@ const CertificateForm = () => {
       console.error('Error generating or uploading image and metadata:', error);
     }
   };
+  
+  
+
   const handleMint = async () => {
     try {
       await toast.promise(
@@ -178,6 +165,9 @@ const CertificateForm = () => {
     }
   }
   
+
+ 
+
 
   return (
     // <></>
@@ -275,7 +265,7 @@ const CertificateForm = () => {
             <label className="block text-gray-700 font-semibold">Reason</label>
             <input
               type="text"
-              name="certificateNumber"
+              name="reason"
               value={formData.reason}
               onChange={handleChange}
               className="w-full border border-gray-300 p-2 mt-2 rounded-md bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-primaryGreen"
@@ -287,7 +277,7 @@ const CertificateForm = () => {
             <label className="block text-gray-700 font-semibold">Duration</label>
             <input
               type="text"
-              name="recipientName"
+              name="duration"
               value={formData.duration}
               onChange={handleChange}
               className="w-full border border-gray-300 p-2 mt-2 rounded-md bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-primaryGreen"

@@ -182,7 +182,7 @@ function RequestCard(props) {
     <div className="w-full bg-gray-800 rounded-2xl px-6 py-4 text-gray-100 gap-2 flex-col flex">
       <div className='flex gap-2 items-baseline'>
         <span className='font-black text-lg'>{props.title}</span>
-        <span className='text-gray-400 font-semibold text-md'>({String(props.address).slice(0, 10)}...)</span>
+        <span className='text-gray-400 font-semibold text-md'>({String(props.publisher).slice(0, 10)}...)</span>
       </div>
       <span className='text-gray-400 text-sm font-semibold mb-3'>{props.description}</span>
       <div className='flex justify-end items-center'>
