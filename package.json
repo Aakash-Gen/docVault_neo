@@ -22,6 +22,7 @@
     "cors": "^2.8.5",
     "ethers": "^6.13.2",
     "express": "^4.21.0",
+    "form-data": "^4.0.0",
     "html-pdf": "^3.0.1",
     "html-to-image": "^1.11.11",
     "ipfs-http-client": "^60.0.1",

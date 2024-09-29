@@ -86,62 +86,124 @@ const CertificateForm = () => {
     }
   };
   
+  // const handleGenerateAndUpload = async () => {
+  //   try {
+  //     // Step 1: Generate the certificate and get the image URL from the localhost server
+  //     await handleSubmit();
+      
+  //     // Step 2: Convert the generated image (from localhost) to a blob
+  //     const imageBlob = await axios.get(imageUrl, { responseType: 'blob' });
+  
+  //     // Step 3: Create a FormData object to upload the image blob to IPFS
+  //     const fileData = new FormData();
+  //     fileData.append('file', imageBlob.data, 'generatedImage.png');
+  
+  //     // Step 4: Upload the image to IPFS
+  //     const imageUploadResponse = await axios({
+  //       method: 'post',
+  //       url: 'https://api.pinata.cloud/pinning/pinFileToIPFS',
+  //       data: fileData,
+  //       headers: {
+  //         Authorization: `Bearer ${import.meta.env.VITE_PINATA_JWT}`,
+  //     }      
+  //     });
+  
+  //     const imageIpfsUrl = 'https://gateway.pinata.cloud/ipfs/' + imageUploadResponse.data.IpfsHash;
+  //     setFileUrl(imageIpfsUrl);
+  //     console.log('Image uploaded to IPFS:', imageIpfsUrl);
+  
+  //     // Step 5: Update metadata JSON with the IPFS URL of the uploaded image
+  //     const updatedJsonData = {
+  //       description: `This is a ${docType} issued by ${formData.organization}`,
+  //       image: imageIpfsUrl,  // Use the IPFS URL instead of the localhost URL
+  //       name: formData.documentType,
+  //       attributes: [
+  //         { trait_type: "Creator", value: "docVault" },
+  //         { trait_type: "Owner", value: formData.recipientName },
+  //         { trait_type: "Date Of Issue", value: formData.dateOfIssue },
+  //         { trait_type: "Org ID", value: walletAddress
+  //          },
+  //       ],
+  //     };
+  
+  //     // Step 6: Upload the updated metadata JSON to IPFS
+  //     const ipfsResponse = await pinJsonToIPFS(updatedJsonData);
+  //     console.log('IPFS Hash of Metadata:', ipfsResponse);
+  
+  //     // Fetch and log the metadata to confirm it's correctly uploaded
+  //     const metadata = await fetchMetadataFromIPFS(ipfsResponse);
+  //     console.log('Fetched Metadata from IPFS:', metadata);
+  //     setMetadataUri(ipfsResponse);
+  
+  //     // You can handle further steps or UI updates here if needed.
+  
+  //   } catch (error) {
+  //     console.error('Error generating or uploading image and metadata:', error);
+  //   }
+  // };
+  
   const handleGenerateAndUpload = async () => {
     try {
       // Step 1: Generate the certificate and get the image URL from the localhost server
       await handleSubmit();
-      
+  
       // Step 2: Convert the generated image (from localhost) to a blob
       const imageBlob = await axios.get(imageUrl, { responseType: 'blob' });
   
       // Step 3: Create a FormData object to upload the image blob to IPFS
-      const fileData = new FormData();
-      fileData.append('file', imageBlob.data, 'generatedImage.png');
+      const formData = new FormData();
+      formData.append("Body", imageBlob.data, 'generatedImage.png');
+      formData.append("Key", 'generatedImage.png');
+      formData.append("ContentType", 'image/png');
   
-      // Step 4: Upload the image to IPFS
-      const imageUploadResponse = await axios({
-        method: 'post',
-        url: 'https://api.pinata.cloud/pinning/pinFileToIPFS',
-        data: fileData,
+      // Step 4: Use QuickNode API to upload the image to IPFS
+      const requestOptions = {
+        method: 'POST',
         headers: {
-          Authorization: `Bearer ${import.meta.env.VITE_PINATA_JWT}`,
-      }      
-      });
-  
-      const imageIpfsUrl = 'https://gateway.pinata.cloud/ipfs/' + imageUploadResponse.data.IpfsHash;
-      setFileUrl(imageIpfsUrl);
-      console.log('Image uploaded to IPFS:', imageIpfsUrl);
-  
-      // Step 5: Update metadata JSON with the IPFS URL of the uploaded image
-      const updatedJsonData = {
-        description: `This is a ${docType} issued by ${formData.organization}`,
-        image: imageIpfsUrl,  // Use the IPFS URL instead of the localhost URL
-        name: formData.documentType,
-        attributes: [
-          { trait_type: "Creator", value: "docVault" },
-          { trait_type: "Owner", value: formData.recipientName },
-          { trait_type: "Date Of Issue", value: formData.dateOfIssue },
-          { trait_type: "Org ID", value: walletAddress
-           },
-        ],
+          'x-api-key': import.meta.env.VITE_QUICKNODE_API_KEY,  // Your QuickNode API key here
+        },
+        body: formData,
+        redirect: 'follow'
       };
   
-      // Step 6: Upload the updated metadata JSON to IPFS
-      const ipfsResponse = await pinJsonToIPFS(updatedJsonData);
-      console.log('IPFS Hash of Metadata:', ipfsResponse);
+      const response = await fetch("https://api.quicknode.com/ipfs/rest/v1/s3/put-object", requestOptions);
+      const result = await response.json();
   
-      // Fetch and log the metadata to confirm it's correctly uploaded
-      const metadata = await fetchMetadataFromIPFS(ipfsResponse);
-      console.log('Fetched Metadata from IPFS:', metadata);
-      setMetadataUri(ipfsResponse);
+      if (response.ok) {
+        const imageIpfsUrl = `https://gateway.quicknode.com/ipfs/${result.Hash}`;
+        setFileUrl(imageIpfsUrl);
+        console.log('Image uploaded to IPFS:', imageIpfsUrl);
   
-      // You can handle further steps or UI updates here if needed.
+        // Step 5: Update metadata JSON with the IPFS URL of the uploaded image
+        const updatedJsonData = {
+          description: `This is a ${docType} issued by ${formData.organization}`,
+          image: imageIpfsUrl,  // Use the IPFS URL instead of the localhost URL
+          name: formData.documentType,
+          attributes: [
+            { trait_type: "Creator", value: "docVault" },
+            { trait_type: "Owner", value: formData.recipientName },
+            { trait_type: "Date Of Issue", value: formData.dateOfIssue },
+            { trait_type: "Org ID", value: walletAddress },
+          ],
+        };
+  
+        // Step 6: Upload the updated metadata JSON to IPFS (using your existing pinJsonToIPFS method)
+        const ipfsResponse = await pinJsonToIPFS(updatedJsonData);
+        console.log('IPFS Hash of Metadata:', ipfsResponse);
+  
+        // Fetch and log the metadata to confirm it's correctly uploaded
+        const metadata = await fetchMetadataFromIPFS(ipfsResponse);
+        console.log('Fetched Metadata from IPFS:', metadata);
+        setMetadataUri(ipfsResponse);
+  
+      } else {
+        console.error('Error uploading image to IPFS:', result);
+      }
   
     } catch (error) {
       console.error('Error generating or uploading image and metadata:', error);
     }
   };
-  
   
 
   const handleMint = async () => {

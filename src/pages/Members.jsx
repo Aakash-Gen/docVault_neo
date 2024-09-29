@@ -180,6 +180,7 @@ function JoinRequestElement(props) {
 
   return (
     <div className="w-full bg-gray-800 rounded-2xl px-6 py-4 text-gray-100 gap-2 flex-col flex">
+      <ToastContainer/>
       <div className='flex gap-2 items-baseline'>
         <span className='font-black text-lg'>{name}</span>
         <span className='text-gray-400 font-semibold text-md'>({String(props.address).slice(0, 10)}...)</span>
