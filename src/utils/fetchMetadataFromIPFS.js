@@ -3,7 +3,7 @@ export const fetchMetadataFromIPFS = async (ipfsHash) => {
   try {
     // const metadataUrl = `https://gateway.pinata.cloud/ipfs/${ipfsHash}`;
     // console.log('Fetching metadata from IPFS:', metadataUrl);
-    const metadataUrl = `https://ipfs.io/ipfs/${ipfsHash}`;
+    const metadataUrl = `https://ipfs.io/ipfs${ipfsHash}`;
     console.log('Fetching metadata from IPFS:', metadataUrl);
 
     const response = await fetch(metadataUrl);
